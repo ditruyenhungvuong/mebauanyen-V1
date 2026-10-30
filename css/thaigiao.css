@@ -1,0 +1,150 @@
+/* =========================================================
+   Mẹ Bầu An Yên – css/thaigiao.css
+   Chủ: FE-5
+   Việc: lời nhắc, ô viết, bảng thông tin nhận diện, thẻ dấu hiệu, hộp thư, hành trình (J01), bản đồ bước chân.
+   Dùng token ở styles.css (:root), không hardcode màu mới. Mọi nút/chip/link ≥ 44 px. Tương phản theo UX 4.2.
+   Các lớp chung (.btn-link, .chip, .btn-sm, .btn-urgent…) đặt trong phạm vi .tg / .jr / .hb để không đè styles.css.
+   ========================================================= */
+
+/* ===== Phần dùng chung cho ba màn của FE-5 (thai giáo, hộp thư, hành trình, thói quen) ===== */
+.tg, .jr, .hb{ text-align:left; }
+.tg h1, .jr h1, .hb h1{ font-size:var(--fs-h1); line-height:var(--lh-head); margin:0 0 var(--sp-2); }
+.tg h2, .jr h2, .hb h2{ font-size:var(--fs-h2); line-height:var(--lh-head); margin:var(--sp-6) 0 var(--sp-3); }
+.tg p, .jr p, .hb p{ margin:0 0 var(--sp-3); }
+.tg .fine, .jr .fine, .hb .fine{ font-size:var(--fs-fine); color:var(--ink-soft); }
+:is(.tg, .jr, .hb) .btn{ min-height:var(--tap-min); font-size:var(--fs-btn); padding:12px 22px; white-space:normal; line-height:1.3; }
+:is(.tg, .jr, .hb) .btn-block + .btn-block{ margin-top:var(--sp-3); }
+:is(.tg, .jr, .hb) .btn-sm{ min-height:var(--tap-min); padding:8px 14px; font-size:15px; }
+:is(.tg, .jr, .hb) .btn-link{
+  display:inline-flex; align-items:center; justify-content:center; min-height:var(--tap-min); padding:10px 8px;
+  background:none; border:0; color:var(--rose-800); font:inherit; font-weight:700; text-decoration:underline;
+  text-underline-offset:3px; cursor:pointer;
+}
+:is(.tg, .jr, .hb) .chips{ display:flex; flex-wrap:wrap; gap:var(--sp-2); margin:var(--sp-3) 0; }
+:is(.tg, .jr, .hb) .chip{
+  min-height:var(--tap-min); padding:8px 16px; border:2px solid var(--line-strong); border-radius:var(--radius-pill);
+  background:#fff; color:var(--rose-900); font:inherit; font-weight:700; font-size:15px; cursor:pointer;
+}
+:is(.tg, .jr, .hb) .chip[aria-pressed="true"]{ background:var(--rose-100); border-color:var(--rose-700); }
+:is(.tg, .jr, .hb) .chip[aria-pressed="true"]::before{ content:"✓ "; }
+/* Nút xóa đang chờ bấm lần hai: nền ▲ đỏ sẫm, chữ trắng 7,38:1 (chỉ dùng cho xóa) */
+:is(.tg, .jr, .hb) .is-armed, :is(.tg, .jr, .hb) .btn-urgent{ background:var(--lv-urgent) !important; color:#fff !important; border-color:var(--lv-urgent) !important; }
+:is(.tg, .jr, .hb) .btn-urgent-outline{ background:#fff; color:var(--lv-urgent); border:2px solid var(--lv-urgent); }
+:is(.tg, .jr, .hb) .btn-urgent-text{ background:transparent; color:var(--lv-urgent); border:2px solid transparent; text-decoration:underline; }
+:is(.tg, .jr, .hb) .sync-badge{ font-size:var(--fs-fine); color:var(--ink-soft); }
+:is(.tg, .jr, .hb) [aria-disabled="true"]{ cursor:not-allowed; }
+
+/* ===== G01 – Thai giáo ===== */
+.tg-step{ margin-top:var(--sp-5); outline:none; }
+.tg .section-title{ margin:0 0 var(--sp-3); font-size:var(--fs-h3); }
+.tg-prompt{
+  background:var(--rose-50); border:1px solid var(--border-soft); border-radius:var(--radius-subcard);
+  padding:var(--sp-4); margin-bottom:var(--sp-4); outline:none;
+}
+.tg-prompt:focus-visible{ outline:3px solid var(--focus-ring); outline-offset:2px; }
+.tg-prompt .badge-tag{ color:var(--rose-900); }
+.tg-prompt-text{ font-size:18px; font-weight:600; line-height:1.5; color:var(--ink); margin:var(--sp-3) 0; }
+.tg-prompt-act{ margin-bottom:var(--sp-3); }
+.tg-safety{ font-size:var(--fs-small); color:var(--ink); background:#fff; border-radius:12px; padding:var(--sp-2) var(--sp-3); }
+.tg-done-band{
+  margin:var(--sp-3) 0 0; padding:var(--sp-2) var(--sp-3); border-radius:12px;
+  background:var(--green-light); color:var(--green-success); font-weight:800;   /* 4,56:1 */
+}
+.tg-actions{ display:flex; flex-direction:column; align-items:stretch; gap:var(--sp-3); }
+.tg-actions .btn-block + .btn-block{ margin-top:0; }
+.tg-actions .btn-link{ align-self:center; }
+.tg-warn{ font-size:var(--fs-small); color:var(--ink); background:var(--rose-50); border-radius:12px; padding:var(--sp-2) var(--sp-3); }
+.tg-text{
+  width:100%; min-height:9.5em; padding:14px 16px; font:inherit; font-size:var(--fs-body); line-height:var(--lh-body);
+  color:var(--ink); background:#fff; border:2px solid var(--line-strong); border-radius:var(--radius-input);
+  resize:vertical;
+}
+.tg-text:focus{ border-color:var(--rose-700); }
+.tg-count{ text-align:right; font-size:var(--fs-fine); color:var(--ink-soft); margin:var(--sp-1) 0 var(--sp-3); }
+.tg .submit-hint{ text-align:center; color:var(--rose-900); background:var(--rose-50); margin:0; }
+.tg-mode{ margin-top:var(--sp-2); }
+.tg-row{ display:flex; flex-wrap:wrap; gap:var(--sp-2); }
+.tg-links{ text-align:center; margin-top:var(--sp-4); }
+.tg .draft-note{ margin-top:var(--sp-5); }
+
+/* L05 – thẻ dấu hiệu ngay trên ô viết (▲ + chữ, không chỉ màu) */
+.tg-sign{
+  background:var(--lv-urgent-bg); border-left:4px solid var(--lv-urgent); border-radius:12px;
+  padding:var(--sp-3) var(--sp-4); margin:var(--sp-3) 0; color:var(--lv-urgent-ink); outline:none;
+}
+.tg-sign p{ color:var(--lv-urgent-ink); }
+.tg-sign-ico{ color:var(--lv-urgent); font-weight:900; }
+/* L04 – bảng thông tin nhận diện */
+.tg-pii{
+  background:var(--rose-50); border:2px solid var(--line-strong); border-radius:var(--radius-subcard);
+  padding:var(--sp-3) var(--sp-4); margin:var(--sp-3) 0; overflow-wrap:anywhere; outline:none;
+}
+.tg-pii p, .tg-pii li{ color:var(--ink); }
+.tg-pii ul{ margin:0 0 var(--sp-3); padding-left:1.2em; }
+.tg-pii mark{ background:var(--accent-soft); color:var(--ink); border-radius:4px; padding:0 3px; }
+/* L13 – ô đồng ý lưu lên tài khoản (Bước B) */
+.tg-cloud{ background:var(--rose-50); border:1px solid var(--rose-300); border-radius:var(--radius-subcard); padding:var(--sp-3) var(--sp-4); margin:var(--sp-3) 0; }
+.tg-switch{ display:flex; align-items:center; gap:var(--sp-3); width:100%; min-height:var(--tap-min); padding:var(--sp-2) 0; background:none; border:0; font:inherit; color:var(--ink); text-align:left; cursor:pointer; }
+
+/* Công tắc có chữ Bật/Tắt (dùng ở L13 và N02) */
+.sw{ position:relative; flex:none; width:48px; height:28px; border-radius:var(--radius-pill); background:#fff; border:2px solid var(--line-strong); }
+.sw-knob{ position:absolute; top:3px; left:3px; width:18px; height:18px; border-radius:50%; background:var(--line-strong); transition:left .2s ease; }
+[aria-checked="true"] > .sw{ background:var(--rose-700); border-color:var(--rose-700); }
+[aria-checked="true"] > .sw .sw-knob{ left:23px; background:#fff; }
+.sw-txt{ flex:none; min-width:2.2em; font-weight:800; font-size:var(--fs-small); color:var(--rose-900); }
+
+/* ===== G02 – Hộp thư ===== */
+.lt-list{ margin-top:var(--sp-4); display:flex; flex-direction:column; gap:var(--sp-3); }
+.letter{
+  background:var(--rose-50); border:1px dashed var(--rose-300); border-radius:16px; padding:var(--sp-3) var(--sp-4); outline:none;
+}
+.letter:focus-visible{ outline:3px solid var(--focus-ring); outline-offset:2px; }
+.letter-date{ font-weight:800; color:var(--rose-900); margin:0 0 var(--sp-1) !important; }
+.letter-prompt{ font-style:italic; color:var(--ink-soft) !important; font-size:var(--fs-small) !important; }
+.letter-text{ white-space:pre-wrap; overflow-wrap:anywhere; color:var(--ink) !important; }
+.letter-text.is-clamp{ display:-webkit-box; -webkit-line-clamp:3; -webkit-box-orient:vertical; overflow:hidden; }
+.letter-foot{ display:flex; flex-wrap:wrap; align-items:center; justify-content:flex-end; gap:var(--sp-2); }
+.letter-foot .sync-badge{ margin-right:auto; }
+.lt-month{ font-size:var(--fs-h3) !important; }
+.lt-empty{ text-align:center; padding:var(--sp-4) 0; }
+.lt-jar{ display:block; margin:0 auto var(--sp-3); }
+
+/* ===== J01 – Hành trình mang thai ===== */
+.jr-map{ text-align:center; }
+.fp-belly{ display:block; width:240px; max-width:100%; height:auto; margin:0 auto var(--sp-2); }
+.fp-bg{ fill:var(--rose-50); stroke:var(--belly-line); stroke-width:1.2; }     /* viền 4,02:1 */
+.fp-foot{ font-size:7px; opacity:.45; text-anchor:middle; dominant-baseline:central; }
+.fp-zone{ fill:none; stroke:var(--rose-700); stroke-width:.9; stroke-dasharray:3 2; }
+.fp-sides{ display:flex; justify-content:space-between; max-width:280px; margin:0 auto var(--sp-2) !important; font-size:var(--fs-fine); color:var(--ink-soft); }
+.fp-top{ font-weight:800; color:var(--rose-900) !important; font-size:var(--fs-h3); }
+.jr-map .chips{ justify-content:center; }
+.jr-row{ display:flex; flex-wrap:wrap; justify-content:center; gap:var(--sp-2); margin-top:var(--sp-2); }
+.jr-table, .hb-table{ width:100%; border-collapse:collapse; margin-top:var(--sp-3); font-size:var(--fs-small); text-align:left; }
+.jr-table caption, .hb-table caption{ text-align:left; font-weight:700; color:var(--rose-900); padding-bottom:var(--sp-1); }
+.jr-table th, .jr-table td, .hb-table th, .hb-table td{ padding:6px 8px; border-bottom:1px solid var(--border-soft); color:var(--ink); }
+.jr-rail{ position:relative; margin:var(--sp-2) 0; }
+.jr-rail-in{ display:flex; gap:var(--sp-2); overflow-x:auto; padding:2px 2px var(--sp-2); scrollbar-width:thin; }
+.jr-rail-in .chip{ flex:none; }
+.jr-rail::after{ content:""; position:absolute; top:0; right:0; bottom:var(--sp-2); width:24px; pointer-events:none; background:linear-gradient(90deg, transparent, #fff); }
+.jr-group{ font-size:var(--fs-h3); color:var(--rose-800); margin:var(--sp-5) 0 var(--sp-2); outline:none; }
+.jr-list{ list-style:none; margin:0; padding:0 0 0 var(--sp-4); border-left:2px solid var(--rose-200); }
+.jr-item{ position:relative; display:flex; flex-wrap:wrap; align-items:flex-start; gap:var(--sp-2); padding:var(--sp-2) 0 var(--sp-3); outline:none; }
+.jr-item:focus-visible{ outline:3px solid var(--focus-ring); }
+.jr-line{ flex:1 1 200px; margin:0 !important; padding-top:10px; color:var(--ink) !important; font-weight:600; }
+.jr-dot{ position:absolute; left:calc(-1 * var(--sp-4) - 7px); top:17px; width:12px; height:12px; border-radius:50%; background:var(--rose-700); }
+.jr-kick .jr-dot{ background:#fff; border:2px solid var(--rose-700); }
+.jr-letter{ flex:1 1 100%; order:2; }
+.jr-del{ flex:none; }
+.jr-foot{ margin-top:var(--sp-6); }
+.jr-foot .btn-block + .btn-block{ margin-top:0; }
+@media (min-width:900px){
+  .jr-cols{ display:grid; grid-template-columns:minmax(0, 1fr) minmax(0, 1.2fr); gap:var(--sp-6); align-items:start; }
+  .jr-col-map{ position:sticky; top:calc(var(--header-h) + var(--sp-4)); }
+}
+@media (max-width:360px){
+  .fp-belly{ width:220px; }
+  .tg-text{ min-height:8em; }
+}
+@media (prefers-reduced-motion: reduce){
+  .sw-knob{ transition:none; }
+}

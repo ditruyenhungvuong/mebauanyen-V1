@@ -1,0 +1,17 @@
+# Rác của hệ điều hành / Google Drive
+desktop.ini
+Thumbs.db
+.DS_Store
+*.tmp
+
+# Cấu hình preview của Claude Code (chỉ dùng trên máy)
+.claude/
+
+# Kết quả test (test ghi ra TMPDIR, phòng khi chạy nhầm thư mục)
+qa-out/
+
+# Ghi chú nội bộ của đội (không đẩy lên repo công khai)
+NGUON.md
+
+# Bản trùng do đồng bộ Drive (rclone bisync) sinh ra khi file bị sửa ở cả hai phía
+*.conflict*

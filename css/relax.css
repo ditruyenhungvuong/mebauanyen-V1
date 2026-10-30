@@ -1,0 +1,240 @@
+/* =========================================================
+   Mẹ Bầu An Yên – css/relax.css
+   Chủ: FE-3 Thư giãn
+   Việc: check-in, gợi ý, thư viện, trình phát (8 biến thể), thẻ tư thế, lớp L01/L02/L03, check-out, hoàn tất.
+   Chỉ dùng token ở styles.css (:root). Mọi lớp riêng có tiền tố .rx- để không đè component chung của FE-1.
+   Vùng chạm ≥ 44 px (--tap-min). Tương phản: chữ --ink / --rose-900 / --ink-soft trên nền trắng, rose-50, rose-100 (AA).
+   Giảm chuyển động: quả cầu, vòng dừng 5 giây, chấm thở tự nhiên, bụng phồng đều đứng yên.
+   ========================================================= */
+
+/* ===== Khung chung ===== */
+.rx.text-left, .rx .text-left{ text-align:left; }
+.rx h1{ font-size:var(--fs-h1); line-height:var(--lh-head); margin:0 0 var(--sp-3); }
+.rx .rx-h2{ font-size:var(--fs-h2); margin:var(--sp-6) 0 var(--sp-3); }
+.rx .rx-h3, .rx-layer .rx-h3{ font-size:var(--fs-h3); line-height:var(--lh-head); margin:0 0 var(--sp-2); color:var(--rose-900); }
+.rx p, .rx-layer p{ color:var(--ink); }
+.rx .fine, .rx-layer .fine{ color:var(--ink-soft); }
+.rx-lead{ font-size:var(--fs-body); color:var(--ink); }
+.rx-center{ text-align:center; margin:var(--sp-2) 0; }
+.rx-row{ display:flex; flex-wrap:wrap; gap:var(--sp-3); justify-content:center; align-items:center; margin:var(--sp-4) 0; }
+.rx-col{ display:flex; flex-direction:column; gap:var(--sp-3); margin:var(--sp-4) 0; }
+.rx .btn, .rx-layer .btn{ min-height:var(--tap-min); font-size:var(--fs-btn); }
+.rx-label{ font-weight:700; color:var(--rose-900); margin:var(--sp-4) 0 var(--sp-2); font-size:var(--fs-small); }
+.rx-link{
+  display:inline-flex; align-items:center; justify-content:center; min-height:var(--tap-min); padding:var(--sp-2) var(--sp-3);
+  background:none; border:0; border-radius:var(--radius-pill); font:inherit; font-weight:700;
+  color:var(--rose-800); text-decoration:underline; text-underline-offset:3px; cursor:pointer;
+}
+.rx-link:hover{ background:var(--rose-50); }
+.rx-hidden-audio{ display:none; }
+
+/* ===== Chip (aria-pressed, có ✓ khi chọn – không chỉ dựa vào màu) ===== */
+.rx-chips{ display:flex; flex-wrap:wrap; gap:var(--sp-2); }
+.rx-chip{
+  min-height:var(--tap-min); padding:var(--sp-2) var(--sp-4); border:1.5px solid var(--line-strong);
+  border-radius:var(--radius-pill); background:#fff; color:var(--rose-900); font:inherit; font-weight:600; cursor:pointer;
+}
+.rx-chip[aria-pressed="true"]{ background:var(--rose-100); border-color:var(--rose-700); }
+.rx-chip[aria-pressed="true"]::before{ content:"✓ "; font-weight:800; }
+.rx-chip:hover{ border-color:var(--rose-700); }
+
+/* ===== T01 Dừng 5 giây ===== */
+.rx-pause{ text-align:center; }
+.rx-pause-orb{
+  width:160px; height:160px; margin:var(--sp-2) auto var(--sp-4); border-radius:50%;
+  display:flex; align-items:center; justify-content:center; font-size:56px;
+  background:radial-gradient(circle at 40% 35%, var(--rose-50), var(--rose-200));
+  border:2px solid var(--rose-300); animation:rxBreathe 10s ease-in-out infinite;
+}
+@keyframes rxBreathe{ 0%,100%{ transform:scale(.88) } 40%{ transform:scale(1) } }
+
+/* ===== T02 Check-in ===== */
+.rx-checkin .section-title{ margin:var(--sp-2) 0 var(--sp-1); }
+.rx-checkin .section-title label{ cursor:pointer; }
+.rx-capy-grid{ display:grid; grid-template-columns:repeat(4, minmax(0, 1fr)); gap:var(--sp-2); margin:var(--sp-3) 0; }
+.rx-emo{ min-height:96px; font:inherit; color:var(--ink); gap:4px; }
+.rx-emo[aria-pressed="true"]{ background:#fff0f5; border-color:var(--rose-700); }
+.rx-emo[aria-pressed="true"] .check-mark-badge{ display:flex; }
+.rx-emo-pic{ width:56px; height:56px; display:flex; align-items:center; justify-content:center; border-radius:50%; overflow:hidden; background:var(--rose-50); }
+.rx-emo-pic img{ width:56px; height:56px; object-fit:cover; display:block; }
+.rx-emo-pic .emoji-fallback, .rx-emo-emoji{ font-size:34px; line-height:1; }
+.rx-emo-name{ font-size:var(--fs-small); font-weight:700; color:var(--rose-900); text-align:center; line-height:1.2; }
+.rx-text{
+  width:100%; min-height:110px; padding:var(--sp-3) var(--sp-4); font:inherit; color:var(--ink); background:#fff;
+  border:1.5px solid var(--line-strong); border-radius:var(--radius-input); resize:vertical;
+}
+.rx-text:focus{ border-color:var(--rose-700); }
+.rx-actions{ display:flex; flex-direction:column; align-items:center; gap:var(--sp-2); margin-top:var(--sp-6); }
+.rx .pii-panel mark{ overflow-wrap:anywhere; }
+
+/* ===== Thanh mức căng (dùng ở T02, T08) ===== */
+.rx-tension{ display:flex; flex-direction:column; align-items:center; gap:var(--sp-2); margin:var(--sp-3) 0; }
+.rx-capy{ width:96px; height:96px; display:flex; align-items:center; justify-content:center; border-radius:50%; background:var(--rose-50); overflow:hidden; }
+.rx-capy .rx-capy-img, .rx-capy img{ width:96px; height:96px; object-fit:cover; display:block; }
+.rx-capy .emoji-fallback, .rx-capy-emoji{ font-size:56px; line-height:1; }
+.rx-tension-val{ font-weight:700; color:var(--rose-900) !important; margin:0; text-align:center; }
+.rx-range{ width:100%; height:var(--tap-min); margin:0; background:transparent; accent-color:var(--rose-700); cursor:pointer; }
+.rx-range::-webkit-slider-runnable-track{ height:8px; border-radius:4px; background:var(--rose-200); }
+.rx-range::-moz-range-track{ height:8px; border-radius:4px; background:var(--rose-200); }
+.rx-range::-moz-range-progress{ height:8px; border-radius:4px; background:var(--rose-700); }
+.rx-range[data-unset="true"]{ opacity:.6; }
+.rx-range:disabled{ opacity:.35; cursor:not-allowed; }
+.rx-range-ends{ width:100%; display:flex; justify-content:space-between; font-size:var(--fs-fine); color:var(--ink-soft); }
+
+/* ===== T03 Gợi ý · T04 Thư viện ===== */
+.rx-sugg{ border:1.5px solid var(--border-soft); border-radius:var(--radius-subcard); padding:var(--sp-4); margin:var(--sp-4) 0; background:#fff; }
+.rx-meta{ font-family:var(--font-body); font-size:var(--fs-small); font-weight:600; color:var(--ink-soft); }
+.rx-warm, .rx-warm-box{ background:var(--rose-50); border-left:4px solid var(--rose-700); border-radius:12px; padding:var(--sp-3) var(--sp-4); color:var(--rose-900) !important; }
+.rx-warm-box p{ color:var(--rose-900); margin-top:0; }
+.rx-exlist{ display:grid; gap:var(--sp-3); }
+.rx-excard{
+  position:relative; display:grid; gap:4px; width:100%; min-height:72px; text-align:left; cursor:pointer;
+  padding:var(--sp-3) calc(var(--sp-4) + 20px) var(--sp-3) var(--sp-4); font:inherit; color:var(--ink);
+  background:#fff; border:1.5px solid var(--line-strong); border-radius:var(--radius-tile);
+}
+.rx-excard:hover{ background:var(--rose-50); }
+.rx-ex-title{ font-family:var(--font-display); font-weight:700; font-size:var(--fs-h3); color:var(--rose-800); }
+.rx-ex-goal{ font-size:var(--fs-small); color:var(--ink); }
+.rx-ex-meta{ font-size:var(--fs-fine); color:var(--ink-soft); }
+.rx-ex-arrow{ position:absolute; right:var(--sp-4); top:50%; transform:translateY(-50%); font-size:24px; color:var(--rose-800); }
+@media (min-width:600px){ .rx-exlist{ grid-template-columns:1fr 1fr; } }
+
+/* ===== T05 Trình phát: khung ===== */
+.rx-player-head h1{ margin-bottom:var(--sp-1); }
+.rx-posture{ display:flex; gap:var(--sp-3); align-items:center; background:var(--rose-50); border:1px solid var(--rose-200); border-radius:var(--radius-subcard); padding:var(--sp-3) var(--sp-4); margin:var(--sp-3) 0; }
+.rx-posture p{ margin:0; color:var(--rose-900); font-size:var(--fs-small); }
+.rx-posture .rx-posture-big{ margin-bottom:var(--sp-1); font-size:var(--fs-body); }
+.rx-posture-art{ flex:0 0 84px; width:84px; height:40px; }
+.rx-posture-art .bed{ fill:var(--rose-200); } .rx-posture-art .pillow{ fill:#fff; stroke:var(--rose-300); }
+.rx-posture-art .skin{ fill:var(--accent-soft); } .rx-posture-art .dress{ fill:var(--rose-500); }
+.rx-safety-line{ font-size:var(--fs-small); color:var(--ink) !important; margin:var(--sp-2) 0; }
+.rx-player-body{ margin:var(--sp-4) 0; }
+.rx-foot{
+  position:sticky; bottom:0; z-index:5; margin-top:var(--sp-4);
+  padding:var(--sp-3) 0 calc(var(--sp-3) + env(safe-area-inset-bottom));
+  background:rgba(255,255,255,.97); border-top:1px solid var(--border-soft);
+  display:flex; flex-direction:column; gap:var(--sp-2);
+}
+.rx-foot-row{ display:grid; grid-template-columns:1fr 1fr; gap:var(--sp-2); }
+.rx-foot .btn{ padding:10px 12px; font-size:15px; line-height:1.25; white-space:normal; min-height:var(--tap-min); }
+@media (min-width:768px){
+  .rx-foot{ flex-direction:row; }
+  .rx-foot-row{ flex:2; } .rx-foot > .btn{ flex:1; width:auto; }
+}
+
+/* ===== Thẻ bước, tiến độ ===== */
+.rx-progress{ font-weight:700; color:var(--rose-900) !important; font-size:var(--fs-small); margin:0 0 var(--sp-2); text-align:center; }
+.rx-step-card{ background:var(--rose-50); border:1px solid var(--rose-200); border-radius:var(--radius-subcard); padding:var(--sp-4); text-align:center; }
+.rx-step-card h2{ font-size:var(--fs-h2); color:var(--rose-900); margin:var(--sp-1) 0 var(--sp-2); }
+.rx-step-card p{ color:var(--ink); }
+.rx-step-icon{ font-size:40px; line-height:1; }
+.rx-phase-name{ font-weight:800; color:var(--rose-800) !important; margin:0; text-transform:none; }
+.rx-guide{ background:var(--rose-50); border-radius:var(--radius-subcard); padding:var(--sp-3) var(--sp-4); }
+.rx-guide ol{ margin:0; padding-left:1.3em; color:var(--ink); }
+.rx-guide li{ margin:var(--sp-1) 0; }
+
+/* ===== T05b/c Quả cầu thở (giảm chuyển động: JS chỉ đổi độ đậm) ===== */
+.rx-orb-wrap{ position:relative; width:200px; height:200px; margin:var(--sp-5) auto; }
+.rx-orb{
+  position:absolute; inset:0; border-radius:50%; transform:scale(.55); transition:transform .12s linear, opacity .3s;
+  background:radial-gradient(circle at 40% 35%, var(--rose-100), var(--rose-300)); border:2px solid var(--rose-500);
+  display:flex; justify-content:center; padding-top:22px; font-size:34px;
+}
+.rx-orb-label{ position:absolute; inset:0; display:flex; flex-direction:column; align-items:center; justify-content:center; padding-top:40px; text-align:center; pointer-events:none; }
+.rx-phase{ font-family:var(--font-display); font-weight:700; font-size:var(--fs-h3); color:var(--rose-900) !important; margin:0; max-width:190px; }
+.rx-orb-count{ font-size:26px; font-weight:800; color:var(--rose-900) !important; margin:0; }
+.rx-controls{ margin:var(--sp-2) 0; }
+.rx-check{ display:flex; align-items:center; gap:var(--sp-2); min-height:var(--tap-min); margin-top:var(--sp-3); cursor:pointer; color:var(--ink); }
+.rx-check input{ width:22px; height:22px; accent-color:var(--rose-700); }
+.rx-timer{ text-align:center; font-size:var(--fs-timer); font-weight:700; color:var(--rose-900) !important; min-height:1.5em; margin:var(--sp-2) 0; }
+.rx-status{ text-align:center; color:var(--ink-soft) !important; min-height:1.2em; margin:0; }
+.rx-finish{ display:block; margin:var(--sp-3) auto 0; }
+
+/* ===== Hình thai phụ (trang trí) ===== */
+.rx-figure-wrap{ display:flex; justify-content:center; margin:var(--sp-2) 0 var(--sp-3); }
+.rx-figure{ width:150px; height:auto; }
+.rx-figure .skin{ fill:var(--accent-soft); stroke:var(--rose-300); }
+.rx-figure .hair{ fill:var(--rose-900); }
+.rx-figure .dress{ fill:var(--rose-200); stroke:var(--rose-300); stroke-width:1.5; }
+.rx-figure .chair{ fill:var(--rose-100); stroke:var(--rose-200); }
+.rx-figure .limb{ fill:none; stroke:var(--rose-300); stroke-width:9; stroke-linecap:round; }
+.rx-mom .belly-swell{ transform-box:fill-box; transform-origin:30% 50%; animation:rxSwell 8s ease-in-out infinite; }
+@keyframes rxSwell{ 0%,100%{ transform:scale(1) } 40%{ transform:scale(1.04) } }
+.rx-sit .z{ transition:fill .3s, stroke .3s; }
+.rx-sit .z.on{ fill:var(--rose-300); stroke:var(--rose-700); stroke-width:2.5; }
+.rx-sit .limb.z.on{ fill:none; stroke:var(--rose-700); }
+
+/* ===== T05e chấm 5-4-3-2-1 ===== */
+.rx-dots{ display:flex; flex-wrap:wrap; justify-content:center; gap:var(--sp-2); margin:var(--sp-3) 0; }
+.rx-dot{ width:var(--tap-min); height:var(--tap-min); border-radius:50%; border:2px solid var(--line-strong); background:#fff; cursor:pointer; }
+.rx-dot[aria-pressed="true"]{ background:var(--rose-700); border-color:var(--rose-800); }
+.rx-dot[aria-pressed="true"]::after{ content:"✓"; color:#fff; font-weight:800; }
+
+/* ===== T05f công tắc, thanh pha, danh sách vùng ===== */
+.rx-switch{ display:flex; align-items:center; gap:var(--sp-3); min-height:var(--tap-min); padding:var(--sp-2) 0; background:none; border:0; font:inherit; color:var(--ink); cursor:pointer; text-align:left; }
+.rx-switch-ui{ flex:0 0 46px; height:26px; border-radius:13px; background:#fff; border:2px solid var(--line-strong); position:relative; }
+.rx-switch-ui::after{ content:""; position:absolute; top:2px; left:2px; width:18px; height:18px; border-radius:50%; background:var(--line-strong); transition:left .2s; }
+.rx-switch[aria-checked="true"] .rx-switch-ui{ background:var(--rose-700); border-color:var(--rose-800); }
+.rx-switch[aria-checked="true"] .rx-switch-ui::after{ left:22px; background:#fff; }
+.rx-bar{ height:8px; border-radius:4px; background:var(--rose-100); overflow:hidden; margin:var(--sp-3) 0; }
+.rx-bar i{ display:block; height:100%; width:0; background:var(--rose-700); }
+.rx-zones{ margin:var(--sp-3) 0 0; padding-left:1.4em; color:var(--ink); font-size:var(--fs-small); }
+.rx-zones li{ margin:2px 0; }
+.rx-zones li.done::after{ content:" ✓"; color:var(--green-success); font-weight:800; }
+.rx-zones li[aria-current="step"]{ font-weight:800; color:var(--rose-900); }
+.rx-zones small{ color:var(--ink-soft); }
+
+/* ===== T05g/h Âm thanh, nhạc ===== */
+.rx-safety-card{ background:var(--rose-50); border:1.5px solid var(--rose-300); border-radius:var(--radius-subcard); padding:var(--sp-3) var(--sp-4); margin:var(--sp-3) 0; }
+.rx-safety-card p{ margin:0; color:var(--rose-900); }
+.rx-volume-art{ font-size:26px; text-align:center; margin-bottom:var(--sp-2) !important; }
+.rx-radios{ border:0; padding:0; margin:var(--sp-3) 0; }
+.rx-radio{ display:flex; align-items:center; gap:var(--sp-3); min-height:48px; padding:var(--sp-1) 0; cursor:pointer; color:var(--ink); }
+.rx-radio input{ width:22px; height:22px; flex:0 0 22px; accent-color:var(--rose-700); }
+.rx-radio small{ color:var(--ink-soft); }
+.rx-vol{ display:flex; align-items:center; gap:var(--sp-2); }
+.rx-vol input{ flex:1; height:var(--tap-min); accent-color:var(--rose-700); }
+.rx-waves{ display:block; width:100%; max-width:240px; height:40px; margin:var(--sp-3) auto; }
+.rx-waves path{ fill:none; stroke:var(--rose-300); stroke-width:3; stroke-linecap:round; }
+
+/* ===== Lớp L01 / L02 / L03 (nằm ngoài card để position:fixed theo màn hình) ===== */
+.rx-layer{
+  position:fixed; inset:0; z-index:40; display:flex; align-items:center; justify-content:center;
+  padding:var(--sp-4); background:rgba(90,64,73,.45); overflow-y:auto;
+}
+.rx-layer[hidden]{ display:none; }
+.rx-layer-card{
+  width:100%; max-width:560px; max-height:calc(100dvh - 32px); overflow-y:auto; background:#fff; color:var(--ink);
+  border-radius:var(--radius-card); padding:var(--sp-6) var(--sp-5); box-shadow:var(--shadow-card);
+}
+.rx-layer-card h2{ font-size:var(--fs-h2); color:var(--rose-900); margin:0 0 var(--sp-2); }
+.rx-msg{ min-height:0; }
+.rx-msg:not(:empty){ background:var(--rose-50); border-radius:12px; padding:var(--sp-3) var(--sp-4); margin:var(--sp-3) 0; color:var(--rose-900); }
+.rx-natural{ text-align:center; }
+.rx-natural-dot{ width:64px; height:64px; margin:0 auto var(--sp-3); border-radius:50%; background:var(--rose-200); animation:rxDot 12s ease-in-out infinite; }
+@keyframes rxDot{ 0%,100%{ opacity:.45 } 50%{ opacity:1 } }
+
+/* ===== T08 Check-out · T09 Hoàn tất ===== */
+.rx-checkout .btn-primary{ margin-top:var(--sp-5); }
+.rx-done{ text-align:center; }
+.rx-tick{ display:block; margin:0 auto var(--sp-3); }
+.rx-done-capy{ margin:var(--sp-2) auto var(--sp-3); }
+.rx-ba{ display:flex; align-items:center; justify-content:center; gap:var(--sp-3); flex-wrap:wrap; margin:var(--sp-4) 0; }
+.rx-ba-capy{ width:56px; height:56px; display:inline-flex; align-items:center; justify-content:center; border-radius:50%; overflow:hidden; background:var(--rose-50); }
+.rx-ba-capy img{ width:56px; height:56px; object-fit:cover; }
+.rx-ba-capy .emoji-fallback, .rx-ba-capy .rx-capy-emoji{ font-size:34px; }
+.rx-mantra{ font-family:var(--font-display); font-size:18px; font-weight:700; color:var(--rose-800) !important; }
+
+/* ===== Màn nhỏ ===== */
+@media (max-width:360px){
+  .rx-capy-grid{ grid-template-columns:repeat(3, minmax(0, 1fr)); }
+  .rx-orb-wrap{ width:180px; height:180px; }
+  .rx-foot .btn{ font-size:14px; }
+}
+
+/* ===== Giảm chuyển động (AC-02) ===== */
+@media (prefers-reduced-motion: reduce){
+  .rx-pause-orb, .rx-natural-dot, .rx-mom .belly-swell{ animation:none !important; transform:none !important; }
+  .rx-orb{ transition:opacity .3s !important; }
+  .rx-tick .checkmark-circle, .rx-tick .checkmark-check{ animation:none !important; stroke-dashoffset:0 !important; }
+}

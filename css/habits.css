@@ -1,0 +1,109 @@
+/* =========================================================
+   Mẹ Bầu An Yên – css/habits.css
+   Chủ: FE-5
+   Việc: nút thói quen, chọn ngày, công tắc chọn thói quen, lịch tháng (thang đậm dần --heat-*), biểu đồ 7 ngày.
+   Dùng token ở styles.css (:root), không hardcode màu mới. Không màu đỏ ở thống kê (AC-106).
+   Vùng chạm ≥ 44 px kể cả ô lịch ở 320 px: lịch tràn ra sát mép card (UX N03, cách được ưu tiên).
+   ========================================================= */
+
+/* ===== N01 – nút thói quen ===== */
+.hb-days{ display:flex; flex-wrap:wrap; gap:var(--sp-2); margin:var(--sp-3) 0; }
+.hb-list{ list-style:none; margin:var(--sp-3) 0; padding:0; display:flex; flex-direction:column; gap:var(--sp-2); }
+.hb-btn{
+  display:flex; align-items:center; gap:var(--sp-3); width:100%; min-height:64px; padding:var(--sp-3) var(--sp-4);
+  background:#fff; border:2px solid var(--line-strong); border-radius:var(--radius-tile);
+  font:inherit; color:var(--ink); text-align:left; cursor:pointer; transition:background .2s ease, border-color .2s ease;
+}
+.hb-btn.on{ background:var(--green-light); border-color:var(--green-success); }
+.hb-ico{ flex:none; font-size:24px; width:32px; text-align:center; }
+.hb-txt{ flex:1; min-width:0; display:flex; flex-direction:column; gap:2px; }
+.hb-txt b{ font-family:var(--font-display); font-size:var(--fs-h3); color:var(--rose-900); font-weight:700; }
+.hb-txt small{ font-size:var(--fs-small); color:var(--ink-soft); }
+.hb-btn.on .hb-txt small{ color:var(--lv-ok-ink); }                    /* 7,00:1 trên nền xanh nhạt */
+.hb-check{
+  flex:none; width:34px; height:34px; border-radius:50%; display:flex; align-items:center; justify-content:center;
+  border:2px solid var(--line-strong); color:transparent; font-weight:900; font-size:18px; background:#fff;
+}
+.hb-btn.on .hb-check{ background:var(--green-success); border-color:var(--green-success); color:#fff; }
+.hb-empty{ background:var(--rose-50); border-radius:var(--radius-subcard); padding:var(--sp-3) var(--sp-4); color:var(--ink) !important; }
+.hb-links{ text-align:center; margin:var(--sp-2) 0 !important; }
+.hb-mode{ text-align:center; }
+.hb-invite{ background:var(--rose-50); border:1px solid var(--rose-300); border-radius:var(--radius-subcard); padding:var(--sp-3) var(--sp-4); margin:var(--sp-3) 0; }
+.hb-invite p{ color:var(--ink) !important; }
+.hb-row{ display:flex; flex-wrap:wrap; align-items:center; gap:var(--sp-2); }
+
+/* ===== N02 – công tắc ===== */
+.hb-switch{
+  display:flex; align-items:center; gap:var(--sp-3); width:100%; min-height:56px; padding:var(--sp-2) var(--sp-4);
+  background:#fff; border:2px solid var(--line-strong); border-radius:var(--radius-tile); font:inherit; color:var(--ink); text-align:left; cursor:pointer;
+}
+.hb-sw-name{ flex:1; min-width:0; font-weight:700; color:var(--rose-900); }
+
+/* ===== N03 – thống kê ===== */
+.hb-month{ font-family:var(--font-display); font-size:20px; font-weight:700; color:var(--rose-800) !important; }
+.hb-note{ background:var(--rose-50); border-radius:12px; padding:var(--sp-2) var(--sp-3); color:var(--ink) !important; }
+.hb-streaks{ list-style:none; margin:0; padding:0; display:flex; flex-direction:column; gap:var(--sp-2); }
+.hb-streaks li{ color:var(--ink); line-height:1.5; }
+.hb-streaks b{ color:var(--rose-900); }
+
+.cal-head{ display:flex; align-items:center; justify-content:space-between; gap:var(--sp-2); margin-bottom:var(--sp-2); }
+.cal-title{ font-family:var(--font-display); font-weight:700; font-size:var(--fs-h3); color:var(--rose-900); }
+.cal-nav{ border:2px solid var(--line-strong); background:#fff; }
+.cal-nav:disabled{ opacity:.45; cursor:not-allowed; }
+/* Lịch tràn ra sát mép card để mỗi ô ≥ 44 px (375: ô ~48; 320: ô ~44) */
+.cal-wrap{ margin-inline:-24px; }
+.cal-dow, .cal-grid{ display:grid; grid-template-columns:repeat(7, minmax(0, 1fr)); gap:1px; }
+.cal-dow span{ text-align:center; font-size:var(--fs-fine); font-weight:700; color:var(--ink-soft); padding:4px 0; }
+.cal-cell{
+  position:relative; min-height:52px; min-width:0; display:flex; flex-direction:column; align-items:center; justify-content:center;
+  border:1px solid var(--border-soft); border-radius:8px; background:var(--heat-0); color:var(--ink); font:inherit; padding:2px 0; cursor:pointer;
+}
+.cal-blank{ border-color:transparent; background:transparent; cursor:default; }
+.cal-d{ font-size:13px; line-height:1.1; }
+.cal-n{ font-size:15px; font-weight:800; line-height:1.2; }
+.cal-cell.heat-1{ background:var(--heat-1); }
+.cal-cell.heat-2{ background:var(--heat-2); }
+.cal-cell.heat-3{ background:var(--heat-3); }
+.cal-cell.heat-4{ background:var(--heat-4); color:var(--heat-ink-light); border-color:var(--heat-4); }
+.cal-cell.heat-5{ background:var(--heat-5); color:var(--heat-ink-light); border-color:var(--heat-5); }
+.cal-cell.is-today{ box-shadow:inset 0 0 0 2px var(--rose-700); }
+.cal-cell.heat-4.is-today, .cal-cell.heat-5.is-today{ box-shadow:inset 0 0 0 2px #fff, 0 0 0 2px var(--rose-700); }
+.cal-cell.is-pick{ outline:3px solid var(--focus-ring); outline-offset:1px; }
+.cal-cell:disabled{ opacity:.45; cursor:not-allowed; }
+.cal-legend{ display:flex; gap:var(--sp-1); margin-bottom:var(--sp-3); }
+.cal-legend .cal-cell{ width:40px; min-height:32px; cursor:default; }
+.hb-detail{ min-height:1em; }
+.hb-detail-list{ list-style:none; margin:0 0 var(--sp-3); padding:0; color:var(--ink); }
+
+/* 7 ngày qua: nhãn · thanh · chữ "{n}/7 ngày" (số bằng chữ luôn có) */
+.bars{ list-style:none; margin:0 0 var(--sp-3); padding:0; display:flex; flex-direction:column; gap:var(--sp-2); }
+.bar-row{ display:grid; grid-template-columns:minmax(0, 9em) minmax(40px, 1fr) auto; align-items:center; gap:var(--sp-2); color:var(--ink); }
+.bar-name{ font-size:var(--fs-small); overflow-wrap:anywhere; }
+.bar-track{ height:14px; border-radius:var(--radius-pill); background:var(--rose-100); overflow:hidden; }
+.bar-fill{ display:block; height:100%; background:var(--rose-700); border-radius:var(--radius-pill); }   /* 4,57:1 */
+.bar-val{ font-size:var(--fs-small); font-weight:700; color:var(--rose-900); white-space:nowrap; }
+.hb-table-wrap{ overflow-x:auto; }
+.hb-table td{ white-space:nowrap; }
+
+/* Khung giữ chỗ khi đang tải (Bước B); tĩnh, không nhấp nháy */
+.hb-skel{ display:flex; flex-direction:column; gap:var(--sp-3); }
+.hb-skel span{ display:block; height:72px; border-radius:var(--radius-subcard); background:var(--rose-50); }
+
+/* Mục trong "Dữ liệu của chị" */
+.hb-select{ min-height:var(--tap-min); padding:8px 12px; border:2px solid var(--line-strong); border-radius:12px; font:inherit; color:var(--ink); background:#fff; }
+
+@media (max-width:360px){
+  .cal-wrap{ margin-inline:-30px; }        /* card 16 + main 16 − 2 → lưới ~316 px, ô ~44 px */
+  .cal-d{ font-size:12px; }
+  .cal-n{ font-size:14px; }
+  .bar-row{ grid-template-columns:minmax(0, 7.5em) minmax(32px, 1fr) auto; }
+}
+@media (min-width:600px){
+  .cal-wrap{ margin-inline:auto; max-width:440px; }
+}
+@media (min-width:900px){
+  .hb-stats{ max-width:none; }
+}
+@media (prefers-reduced-motion: reduce){
+  .hb-btn{ transition:none; }
+}
